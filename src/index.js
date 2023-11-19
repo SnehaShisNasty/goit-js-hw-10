@@ -13,9 +13,10 @@ const refs = {
 
 refs.error.style.display = 'none';
 refs.loading.style.display = 'flex';
-
+refs.select.style.display = 'none';
 fetchBreeds()
   .then(data => {
+    refs.select.style.display = 'flex';
     refs.select.innerHTML = data
       .map(
         ({ id, name }) => `
@@ -36,11 +37,15 @@ refs.select.addEventListener('change', handleChange);
 
 function handleChange(event) {
   refs.loading.style.display = 'flex';
+  refs.error.style.display = 'none';
 
   console.log('Selected breed ID:', event.target.value);
 
   fetchCatByBreed(event.currentTarget.value)
     .then(catData => {
+      if (catData.length === 0) {
+        refs.error.style.display = 'flex';
+      }
       refs.div.style.display = 'block';
       refs.div.innerHTML = catData
         .map(
@@ -51,6 +56,7 @@ function handleChange(event) {
       `
         )
         .join('');
+      console.log(catData.length);
     })
     .catch(error => {
       console.error('Error fetching cat data:', error);
