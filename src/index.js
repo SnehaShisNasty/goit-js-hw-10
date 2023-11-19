@@ -11,7 +11,6 @@ const refs = {
   error: document.querySelector('.error'),
 };
 
-// Show loading indicator initially
 refs.error.style.display = 'none';
 refs.loading.style.display = 'flex';
 
@@ -35,9 +34,7 @@ fetchBreeds()
 
 refs.select.addEventListener('change', handleChange);
 
-// Function to handle the 'change' event
 function handleChange(event) {
-  // Show loading indicator when a new breed is selected
   refs.loading.style.display = 'flex';
 
   console.log('Selected breed ID:', event.target.value);
